@@ -4,43 +4,44 @@ import { builder } from "@builder.io/sdk";
 // Replace with your Public API Key
 builder.init("YJIGb4i01jvw0SRdL5Bt");
 
-interface PageProps {
-  params: {
-    page: string[];
-  };
-}
-
-export default async function DataExample(props: PageProps) {
-  const content = await builder
-    .get("customer-showcase", {
-      prerender: false,
-    })
-    .toPromise();
+export default async function DataExample() {
+  const menus = await builder.getAll("nav-menus", {
+    prerender: false,
+  });
 
   return (
     <>
+      <header>
+        <nav>
+          {menus.map((menu, index) => (
+            <>
+              <div style={{ marginTop: 20 }}>{menu.data?.name}</div>
+              {menu.data?.submenus?.map((submenu) =>
+                submenu.menuItems.map((menuItem, index) => (
+                  <a
+                    key={index}
+                    href={menuItem.itemLink}
+                    style={{ margin: 10 }}
+                  >
+                    {menuItem.itemName}
+                  </a>
+                ))
+              )}
+            </>
+          ))}
+        </nav>
+      </header>
       <div
         style={{
-          background: "purple",
+          padding: 20,
+          textAlign: "center",
+          background: "cyan",
           fontSize: 24,
-          textAlign: "center",
-          height: 200,
-          padding: 20,
+          minHeight: 300,
+          marginTop: 50,
         }}
       >
-        {content.data.companyName}
-      </div>
-      <img alt="company image" src={content.data.mainImage} />
-      <div
-        style={{
-          background: "blue",
-          fontSize: 14,
-          textAlign: "center",
-          height: 200,
-          padding: 20,
-        }}
-      >
-        {content.data.description}
+        Your site content
       </div>
     </>
   );
