@@ -13,6 +13,7 @@ interface PageProps {
 }
 
 export default async function SectionExample(props: PageProps) {
+  const model = "blog-article";
   const content = await builder
     .get("blog-article", {
       prerender: false,
@@ -36,7 +37,7 @@ export default async function SectionExample(props: PageProps) {
         Non builder content
       </div>
       {/* Render the Builder page */}
-      <RenderBuilderContent content={content} />
+      <RenderBuilderContent content={content} model={model} />
       <div
         style={{
           background: "blue",

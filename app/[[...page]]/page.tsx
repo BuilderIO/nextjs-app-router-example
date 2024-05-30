@@ -13,6 +13,7 @@ interface PageProps {
 }
 
 export default async function Page(props: PageProps) {
+  const model = "page";
   const content = await builder
     .get("page", {
       userAttributes: {
@@ -28,7 +29,7 @@ export default async function Page(props: PageProps) {
         <title>{content?.data.title}</title>
       </Head>
       {/* Render the Builder page */}
-      <RenderBuilderContent content={content} />
+      <RenderBuilderContent content={content} model={model} />
     </>
   );
 }
