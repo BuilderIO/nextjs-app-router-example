@@ -1,16 +1,15 @@
 "use client";
+import { ComponentProps } from "react";
 import { BuilderComponent, useIsPreviewing } from "@builder.io/react";
 import DefaultErrorPage from "next/error";
 
-interface BuilderPageProps {
-  content: any;
-}
+type BuilderPageProps = ComponentProps<typeof BuilderComponent>;
 
-export function RenderBuilderContent({ content }: BuilderPageProps) {
+export function RenderBuilderContent(props: BuilderPageProps) {
   const isPreviewing = useIsPreviewing();
 
-  if (content || isPreviewing) {
-    return <BuilderComponent content={content} model="page" />;
+  if (props.content || isPreviewing) {
+    return <BuilderComponent {...props} />;
   }
 
   return <DefaultErrorPage statusCode={404} />;
